@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tuckshop.Areas.Identity.Data;
+using Tuckshop.Models;
 
 namespace Tuckshop.Areas.Identity.Data;
 
@@ -19,4 +20,6 @@ public class TuckshopContext : IdentityDbContext<TuckshopUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
     }
+
+    public DbSet<Tuckshop.Models.Order>? Order { get; set; }
 }
