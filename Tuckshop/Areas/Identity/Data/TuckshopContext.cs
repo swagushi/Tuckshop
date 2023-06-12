@@ -22,4 +22,10 @@ public class TuckshopContext : IdentityDbContext<TuckshopUser>
     }
 
     public DbSet<Tuckshop.Models.Order>? Order { get; set; }
+
+    public DbSet<Tuckshop.Models.Food>? Food { get; set; }
+
+    public DbSet<Tuckshop.Models.Student>? Student { get; set; }
+
+    public DbSet<Tuckshop.Models.Payment>? Payment { get; set; }
 }
