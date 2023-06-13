@@ -22,6 +22,8 @@ namespace Tuckshop.Views
         // GET: Students
         public async Task<IActionResult> Index()
         {
+          
+
               return _context.Student != null ? 
                           View(await _context.Student.ToListAsync()) :
                           Problem("Entity set 'TuckshopContext.Student'  is null.");

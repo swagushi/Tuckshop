@@ -8,7 +8,7 @@ namespace Tuckshop.Models
         [Display(Name = "Payment Name")]
         public string PaymentName { get; set; }
         [Display(Name = "Payment Amount")]
-        [Range(1,100, ErrorMessage ="Please Enter atleast $1")]
+        [Range(1,100, ErrorMessage ="Please enter between $1-$100")]
         public int PaymentAmount { get; set; }
         [Display(Name = "Payment Statement")]
         public string PaymentStatement { get; set; }

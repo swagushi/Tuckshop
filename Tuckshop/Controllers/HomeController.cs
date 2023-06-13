@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Tuckshop.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Tuckshop.Controllers
 {
@@ -15,6 +16,10 @@ namespace Tuckshop.Controllers
 
         public IActionResult Index()
         {
+            Student student = new Student();
+            student.Homeroom = new List<SelectListItem>();
+
+
             return View();
         }
 
