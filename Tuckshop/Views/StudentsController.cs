@@ -20,11 +20,19 @@ namespace Tuckshop.Views
         }
 
         // GET: Students
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-              return _context.Student != null ? 
-                          View(await _context.Student.ToListAsync()) :
-                          Problem("Entity set 'TuckshopContext.Student'  is null.");
+            var students = from m in _context.Student
+                         select m;
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(s => s.LastName == searchString);
+            }
+
+            return View(await students.ToListAsync());
+
         }
 
         // GET: Students/Details/5
