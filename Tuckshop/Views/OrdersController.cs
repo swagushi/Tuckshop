@@ -20,11 +20,18 @@ namespace Tuckshop.Views
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-              return _context.Order != null ? 
-                          View(await _context.Order.ToListAsync()) :
-                          Problem("Entity set 'TuckshopContext.Order'  is null.");
+            var orders = from o in _context.Order
+                         select o;
+
+            if (!string.IsNullOrEmpty(searchString))
+
+            {
+                orders = orders.Where(s => s.OrderName!.Contains(searchString));
+            }
+            return View(await orders.ToListAsync());
+
         }
 
         // GET: Orders/Details/5
