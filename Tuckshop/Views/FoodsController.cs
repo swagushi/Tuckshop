@@ -20,11 +20,19 @@ namespace Tuckshop.Views
         }
 
         // GET: Foods
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-              return _context.Food != null ? 
-                          View(await _context.Food.ToListAsync()) :
-                          Problem("Entity set 'TuckshopContext.Food'  is null.");
+            var foods = from m in _context.Food
+                           select m;
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+             
+            }
+
+            return View(await foods.ToListAsync());
+
         }
 
         // GET: Foods/Details/5
