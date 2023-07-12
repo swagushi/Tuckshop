@@ -12,5 +12,6 @@ namespace Tuckshop.Models
         public int Amount { get; set; }
         public ICollection<Student> Student { get; set; }
         public ICollection<Payment> Payment { get; set; }
+        public ICollection<Order> Order { get; set; }
     }
 }

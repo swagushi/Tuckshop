@@ -12,6 +12,7 @@ namespace Tuckshop.Models
         [Display(Name = "Home Room")]
 
         public string Homeroom { get; set; }
+        public ICollection<Order> Order { get; set; }
 
     }
 }
