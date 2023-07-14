@@ -20,18 +20,11 @@ namespace Tuckshop.Views
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index()
         {
-            var orders = from o in _context.Order
-                         select o;
-
-            if (!string.IsNullOrEmpty(searchString))
-
-            {
-                orders = orders.Where(s => s.OrderName!.Contains(searchString));
-            }
-            return View(await orders.ToListAsync());
-
+              return _context.Order != null ? 
+                          View(await _context.Order.ToListAsync()) :
+                          Problem("Entity set 'TuckshopContext.Order'  is null.");
         }
 
         // GET: Orders/Details/5
@@ -63,7 +56,7 @@ namespace Tuckshop.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderID,OrderName,OrderNumber")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderID,OrderName,OrderNumber,DateOrdered")] Order order)
         {
             if (!ModelState.IsValid)
             {
@@ -95,14 +88,14 @@ namespace Tuckshop.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderID,OrderName,OrderNumber")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderID,OrderName,OrderNumber,DateOrdered")] Order order)
         {
             if (id != order.OrderID)
             {
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
