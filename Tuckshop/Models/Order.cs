@@ -10,7 +10,7 @@ namespace Tuckshop.Models
         public string OrderName { get; set; }
         [Display(Name = "Order Number")]
         public int OrderNumber { get; set; }
-
+        [Display(Name = "Date Ordered")]
         public DateTime DateOrdered { get; set; }
         public ICollection<Student> Student { get; set; }
         public ICollection<Food> Food { get; set; }

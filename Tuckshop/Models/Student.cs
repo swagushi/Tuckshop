@@ -13,7 +13,8 @@ namespace Tuckshop.Models
         public string LastName { get; set; }
         [Display(Name = "Home Room")]
         [StringLength(3)]
-        [RegularExpression(@"^[A-Z]{3}$", ErrorMessage = "Homeroom code cannot be more than 3 letters, and must be entered in all caps.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$",
+         ErrorMessage = "Characters are not allowed. And HR code must be 3 letters long")]
         public string Homeroom { get; set; }
         public ICollection<Order> Order { get; set; }
 
