@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tuckshop.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using Tuckshop.Areas.Identity.Data;
 namespace Tuckshop.Migrations
 {
     [DbContext(typeof(TuckshopContext))]
-    partial class TuckshopContextModelSnapshot : ModelSnapshot
+    [Migration("20230714130014_Fixed the order model and renamed to Request")]
+    partial class FixedtheordermodelandrenamedtoRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

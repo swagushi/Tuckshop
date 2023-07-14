@@ -2,13 +2,16 @@
 
 namespace Tuckshop.Models
 {
-  public class Order
+    public class Request
     {
-        public int OrderID { get; set; }
+        public int RequestID { get; set; }
         [Display(Name = "Order Name")]
         [StringLength(50, MinimumLength = 3)]
+        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$",
+         ErrorMessage = "Characters are not allowed.")]
         public string OrderName { get; set; }
         [Display(Name = "Order Number")]
+
         public int OrderNumber { get; set; }
         [Display(Name = "Date Ordered")]
         public DateTime DateOrdered { get; set; }

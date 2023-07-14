@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Tuckshop.Models;
 
 namespace Tuckshop
 {
@@ -29,5 +30,7 @@ namespace Tuckshop
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
+
+       
     }
 }

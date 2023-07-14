@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tuckshop.Areas.Identity.Data;
 using Tuckshop.Models;
 
@@ -21,7 +22,15 @@ public class TuckshopContext : IdentityDbContext<TuckshopUser>
         // Add your customizations after calling base.OnModelCreating(builder);
     }
 
-    public DbSet<Tuckshop.Models.Order>? Order { get; set; }
+    public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<TuckshopUser>
+    {
+        public void Configure(EntityTypeBuilder<TuckshopUser> builder)
+        { 
+            builder.Property(u => u.Firstname).HasMaxLength(200);
+            builder.Property(u => u.LastName).HasMaxLength(200);
+        }
+    }
+    public DbSet<Tuckshop.Models.Request>? Request { get; set; }
 
     public DbSet<Tuckshop.Models.Food>? Food { get; set; }
 
