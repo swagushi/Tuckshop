@@ -22,11 +22,52 @@ namespace Tuckshop.Views
         }
 
         // GET: Payments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+      string sortOrder,
+      string currentFilter,
+      string searchString,
+      int? pageNumber)
         {
-              return _context.Payment != null ? 
-                          View(await _context.Payment.ToListAsync()) :
-                          Problem("Entity set 'TuckshopContext.Payment'  is null.");
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var payments = from s in _context.Payment
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                payments = payments.Where(s => s.PaymentName.Contains(searchString)
+                                       || s.PaymentName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    payments = payments.OrderByDescending(s => s.PaymentName);
+                    break;
+                case "Date":
+                    payments = payments.OrderBy(s => s.PaymentName);
+                    break;
+                case "date_desc":
+                    payments = payments.OrderByDescending(s => s.PaymentName);
+                    break;
+                default:
+                    payments = payments.OrderBy(s => s.PaymentName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Payment>.CreateAsync(payments.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Payments/Details/5
