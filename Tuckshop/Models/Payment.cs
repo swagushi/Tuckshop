@@ -11,7 +11,7 @@ namespace Tuckshop.Models
          ErrorMessage = "Characters are not allowed.")]
         public string PaymentName { get; set; }
         [Display(Name = "Payment Amount")]
-        [Range(1,100, ErrorMessage ="Please Enter between $1 and $100")]
+        [Range(0.0,99.9, ErrorMessage ="Please Enter between $1 and $100")]
         public int PaymentAmount { get; set; }
         [Display(Name = "Payment Statement")]
         [StringLength(50, MinimumLength = 3)]

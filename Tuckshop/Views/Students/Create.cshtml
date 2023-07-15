@@ -22,11 +22,14 @@
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Homeroom" class="control-label"></label>
-                <input asp-for="Homeroom" class="form-control" />
-                <span asp-validation-for="Homeroom" class="text-danger"></span>
-            </div>
+            
+            <label class="from-label" >Homeroom</label>
+            @Html.DropDownList("Homeroom",
+            Html.GetEnumSelectList<HomeRoom>(),
+            "Select Role",
+            new {@class = "form-control"})
+
+           
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

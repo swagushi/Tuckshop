@@ -205,3 +205,16 @@ namespace Tuckshop.Views
         }
     }
 }
+
+public enum HomeRoom
+{
+    EKR = 0, 
+    EKO = 1,
+    LMG = 2,
+    WNY = 3,
+    PLY = 4,
+    ENU = 5,
+    BLD = 6,
+    WNT = 7,
+    SEG = 8,
+}
