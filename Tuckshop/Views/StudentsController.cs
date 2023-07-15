@@ -12,7 +12,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class StudentsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -90,6 +90,7 @@ namespace Tuckshop.Views
         }
 
         // GET: Students/Create
+      
         public IActionResult Create()
         {
             return View();
