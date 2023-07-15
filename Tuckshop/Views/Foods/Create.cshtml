@@ -12,16 +12,19 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FoodName" class="control-label"></label>
-                <input asp-for="FoodName" class="form-control" />
-                <span asp-validation-for="FoodName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrinkName" class="control-label"></label>
-                <input asp-for="DrinkName" class="form-control" />
-                <span asp-validation-for="DrinkName" class="text-danger"></span>
-            </div>
+           
+            <label class="from-label">Food Name</label>
+            @Html.DropDownList("Food Name",
+            Html.GetEnumSelectList<Foods>(),
+            "Select Role",
+            new {@class = "form-control"})
+
+            <label class="from-label">Drinks</label>
+            @Html.DropDownList("Drinks",
+            Html.GetEnumSelectList<Drinks>(),
+            "Select Role",
+            new {@class = "form-control"})
+
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
                 <input asp-for="Amount" class="form-control" />

@@ -171,3 +171,18 @@ namespace Tuckshop.Views
         }
     }
 }
+
+public enum Foods
+{
+    Hamburger = 0,
+    Salad = 1,
+    Wrap = 2,
+}
+
+public enum Drinks
+{
+    Water = 0,
+    Coke = 1,
+    Sprite = 2,
+    Milk = 3,
+}
