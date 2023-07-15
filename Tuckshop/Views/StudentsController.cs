@@ -139,7 +139,7 @@ namespace Tuckshop.Views
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -217,4 +217,7 @@ public enum HomeRoom
     BLD = 6,
     WNT = 7,
     SEG = 8,
+    ABC = 9,
+    BDA = 10,
+    CGA = 11,
 }
