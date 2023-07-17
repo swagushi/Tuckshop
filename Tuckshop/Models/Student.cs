@@ -12,9 +12,7 @@ namespace Tuckshop.Models
         [StringLength(50, MinimumLength = 3)]
         public string LastName { get; set; }
         [Display(Name = "Home Room")]
-        [StringLength(3)]
-        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$",
-         ErrorMessage = "Characters are not allowed. And HR code must be 3 letters long")]
+        
         public string Homeroom { get; set; }
 
         public ICollection<Request> Request { get; set; }

@@ -26,7 +26,9 @@
             
             <div class="form-group">
                 <label asp-for="Homeroom" class="control-label"></label>
-                <input asp-for="Homeroom" class="form-control" />
+                <select asp-for="Homeroom" class="form-control" asp-items="Html.GetEnumSelectList<HomeRoom>()">
+                    <option value="">Select</option>
+                </select>
                 <span asp-validation-for="Homeroom" class="text-danger"></span>
             </div>
 
