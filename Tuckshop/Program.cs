@@ -68,12 +68,16 @@ namespace Tuckshop
                 var userManager =
                     scope.ServiceProvider.GetRequiredService<UserManager<TuckshopUser>>();
 
+                string FirstName = "Administrtor";
+                string LastName = "Member";
                 string email = "admin@tuckshop.com";
                 string password = "Test1234,";
                 
                 if (await userManager.FindByEmailAsync(email) == null)
                 {
                     var user = new TuckshopUser();
+                    user.Firstname = FirstName;
+                    user.LastName = LastName;
                     user.Email = email;
                     user.Email = email;
 

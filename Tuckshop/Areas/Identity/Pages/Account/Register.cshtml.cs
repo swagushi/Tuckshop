@@ -71,15 +71,15 @@ namespace Tuckshop.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            [Required]
+         
             [StringLength(225, ErrorMessage = "The First Name cannot exceed 225 letters")]
             [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            public string? FirstName { get; set; }
 
-            [Required]
+            
             [StringLength(225, ErrorMessage = "The Last Name cannot exceed 225 letters")]
             [Display(Name = "Last Name")]
-            public string LastName { get; set; }
+            public string? LastName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
