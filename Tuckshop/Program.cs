@@ -78,7 +78,7 @@ namespace Tuckshop
                     var user = new TuckshopUser();
                     user.Firstname = FirstName;
                     user.LastName = LastName;
-                    user.Email = email;
+                    user.UserName = email;
                     user.Email = email;
 
 
