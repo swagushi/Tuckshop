@@ -21,11 +21,22 @@
                 <ul class="nav justify-content-center">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
- <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Students</a> </li>
+ <li class="nav-item">  </li>
   <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="Index">Orders</a> </li>
    <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Payments" asp-action="Index">Payments</a> </li>
     <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Foods" asp-action="Index">Menu</a> </li>
-                        </li>
+                        <li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                if (User.IsInRole("Admin"))
+                                {
+                                  <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Students</a>
+                                }
+
+
+                            }
+
+                            </li>
                     </ul>
                 </div>
             </div>
