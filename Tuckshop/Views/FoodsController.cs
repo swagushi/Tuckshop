@@ -11,7 +11,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Teachers, Students")]
     public class FoodsController : Controller
     {
         private readonly TuckshopContext _context;
