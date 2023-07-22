@@ -42,9 +42,9 @@
                 @Html.DisplayFor(modelItem => item.Homeroom)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.StudentID"></a> |
-                <a asp-action="Details" asp-route-id="@item.StudentID"></a> |
-                <a asp-action="Delete" asp-route-id="@item.StudentID"></a>
+                <a asp-action="Edit" asp-route-id="@item.StudentID">edit</a> |
+                <a asp-action="Details" asp-route-id="@item.StudentID">details</a> |
+                <a asp-action="Delete" asp-route-id="@item.StudentID">delete</a>
             </td>
         </tr>
 }

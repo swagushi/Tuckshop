@@ -78,6 +78,7 @@ namespace Tuckshop.Views
         }
 
         // GET: Foods/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Food == null)
@@ -129,6 +130,7 @@ namespace Tuckshop.Views
         }
 
         // GET: Foods/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Food == null)

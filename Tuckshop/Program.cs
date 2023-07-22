@@ -71,7 +71,7 @@ namespace Tuckshop
                 string FirstName = "Administrtor";
                 string LastName = "Member";
                 string email = "admin@tuckshop.com";
-                string password = "Test1234,";
+                string password = "Admin1234&";
                 
                 if (await userManager.FindByEmailAsync(email) == null)
                 {
@@ -87,6 +87,32 @@ namespace Tuckshop
                    await userManager.AddToRoleAsync(user, "Admin");
                 }
             }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var userManager =
+                    scope.ServiceProvider.GetRequiredService<UserManager<TuckshopUser>>();
+
+                string FirstName = "Teacher";
+                string LastName = "member";
+                string email = "teacher@tuckshop.com";
+                string password = "Test1234,";
+
+                if (await userManager.FindByEmailAsync(email) == null)
+                {
+                    var user = new TuckshopUser();
+                    user.Firstname = FirstName;
+                    user.LastName = LastName;
+                    user.UserName = email;
+                    user.Email = email;
+
+
+                    await userManager.CreateAsync(user, password);
+
+                    await userManager.AddToRoleAsync(user, "Teacher");
+                }
+            }
+
 
             app.Run();
         }

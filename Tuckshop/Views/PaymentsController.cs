@@ -111,6 +111,7 @@ namespace Tuckshop.Views
         }
 
         // GET: Payments/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Payment == null)
@@ -162,6 +163,7 @@ namespace Tuckshop.Views
         }
 
         // GET: Payments/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Payment == null)

@@ -11,7 +11,8 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Teachers, Students")]
+
     public class RequestsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -110,6 +111,7 @@ namespace Tuckshop.Views
             return View(request);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Requests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -162,6 +164,7 @@ namespace Tuckshop.Views
         }
 
         // GET: Requests/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Request == null)
