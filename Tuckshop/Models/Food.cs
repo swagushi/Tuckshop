@@ -15,7 +15,6 @@ namespace Tuckshop.Models
         [Range(1, 100, ErrorMessage = "Please Enter atleast $1")]
         public int Amount { get; set; }
         public ICollection<Student> Student { get; set; }
-        public ICollection<Payment> Payment { get; set; }
         public ICollection<Request> Request { get; set; }
     }
 }
