@@ -12,7 +12,8 @@ namespace Tuckshop.Models
         public string PaymentName { get; set; }
         [Display(Name = "Payment Amount")]
         [Range(1,100, ErrorMessage ="Please Enter between $1 and $100")]
-        public int PaymentAmount { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal PaymentAmount { get; set; }
         [Display(Name = "Payment Statement")]
         [StringLength(50, MinimumLength = 3)]
         [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$",
