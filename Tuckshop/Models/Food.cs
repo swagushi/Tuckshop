@@ -13,7 +13,9 @@ namespace Tuckshop.Models
         public string DrinkName { get; set; }
         [Display(Name = "Amount")]
         [Range(1, 100, ErrorMessage = "Please Enter atleast $1")]
-        public int Amount { get; set; }
+
+        [DataType(DataType.Currency)]
+        public decimal Amount { get; set; }
         public ICollection<Student> Student { get; set; }
         public ICollection<Request> Request { get; set; }
     }
