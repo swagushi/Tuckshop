@@ -11,7 +11,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize(Roles = "Admin, Teachers, Students")]
+    [Authorize(Roles = "Admin, Teacher, Student")]
     public class FoodsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -25,12 +25,12 @@ namespace Tuckshop.Views
         public async Task<IActionResult> Index(string searchString)
         {
             var foods = from m in _context.Food
-                           select m;
+                        select m;
 
 
             if (!string.IsNullOrEmpty(searchString))
             {
-             
+
             }
 
             return View(await foods.ToListAsync());
@@ -162,14 +162,14 @@ namespace Tuckshop.Views
             {
                 _context.Food.Remove(food);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FoodExists(int id)
         {
-          return (_context.Food?.Any(e => e.FoodID == id)).GetValueOrDefault();
+            return (_context.Food?.Any(e => e.FoodID == id)).GetValueOrDefault();
         }
     }
 }

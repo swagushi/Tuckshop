@@ -11,7 +11,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize(Roles = "Admin, Teachers, Students")]
+    [Authorize(Roles = "Admin, Teacher, Student")]
     public class PaymentsController : Controller
     {
         private readonly TuckshopContext _context;

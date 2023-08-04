@@ -12,8 +12,8 @@ using Tuckshop.Areas.Identity.Data;
 namespace Tuckshop.Migrations
 {
     [DbContext(typeof(TuckshopContext))]
-    [Migration("20230802000719_added decimal to the payments")]
-    partial class addeddecimaltothepayments
+    [Migration("20230804130505_foods select")]
+    partial class foodsselect
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -270,8 +270,8 @@ namespace Tuckshop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FoodID"), 1L, 1);
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("DrinkName")
                         .IsRequired()

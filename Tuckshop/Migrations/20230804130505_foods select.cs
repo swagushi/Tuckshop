@@ -4,7 +4,7 @@
 
 namespace Tuckshop.Migrations
 {
-    public partial class Requests : Migration
+    public partial class foodsselect : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

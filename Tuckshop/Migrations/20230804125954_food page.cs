@@ -4,7 +4,7 @@
 
 namespace Tuckshop.Migrations
 {
-    public partial class addeddecimaltothepayments : Migration
+    public partial class foodpage : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,6 +54,14 @@ namespace Tuckshop.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(50)",
                 oldMaxLength: 50);
+
+            migrationBuilder.AlterColumn<decimal>(
+                name: "Amount",
+                table: "Food",
+                type: "decimal(18,2)",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "int");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -98,6 +106,14 @@ namespace Tuckshop.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "Amount",
+                table: "Food",
+                type: "int",
+                nullable: false,
+                oldClrType: typeof(decimal),
+                oldType: "decimal(18,2)");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payment_FoodID",

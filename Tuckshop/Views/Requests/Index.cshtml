@@ -7,7 +7,7 @@
 <h1>Orders</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create Order</a>
 </p>
 
 <p>
@@ -43,11 +43,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DateOrdered)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.RequestID"></a> |
-                    <a asp-action="Details" asp-route-id="@item.RequestID"></a> |
-                    <a asp-action="Delete" asp-route-id="@item.RequestID"></a>
-                </td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.RequestID"></a> |
+                            <a asp-action="Details" asp-route-id="@item.RequestID"></a> |
+                            <a asp-action="Delete" asp-route-id="@item.RequestID"></a>
+                        </td>
+                    }
+
+
+                }
+               
             </tr>
         }
     </tbody>
