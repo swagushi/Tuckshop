@@ -11,7 +11,7 @@ namespace Tuckshop.Models
          ErrorMessage = "Characters are not allowed.")]
         public string OrderName { get; set; }
         [Display(Name = "Order Number")]
-        [Range(1, 1000, ErrorMessage = "Please Enter between $1 and $100")]
+        [Range(1, 1000, ErrorMessage = "Please Enter a value from 1 to 1000")]
         public int OrderNumber { get; set; }
         [Display(Name = "Date Ordered")]
         public DateTime DateOrdered { get; set; }
