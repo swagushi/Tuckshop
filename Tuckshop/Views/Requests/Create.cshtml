@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateOrdered" class="control-label"></label>
-                <input asp-for="DateOrdered" class="form-control" />
+                <input asp-for="DateOrdered" max="@DateTime.Now.ToString("2040-08-09Thh:mm")" min="@DateTime.Now.AddYears(-1).ToString("2023-01-20Thh:mm")" />
                 <span asp-validation-for="DateOrdered" class="text-danger"></span>
             </div>
             <div class="form-group">
