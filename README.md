@@ -3,4 +3,6 @@ The Tuckshop brand can be described as a non profit as this project can be picke
 To launch this project you must clone the reposotory in visual studio 2022 as I have not published this to azure or any other publishing websites, after cloning the repository type "update-database" into the Nuget Package Manager then run the project it will run with no diffculties. Then once the project is launched to access the pages you must register as a user or sign in with the admin login or the teacher login, these accounts have specefic roles associated with the database. With the admin login you will be able to access the students page and edit and delete any of the entries.
 
 The email is: admin@tuckshop.com
-and The password is: Test1234, 
+and The password is: Admin1234&
+
+But if that does not work check the program.cs, the email and password will be listed. 
