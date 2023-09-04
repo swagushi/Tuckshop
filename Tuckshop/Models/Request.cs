@@ -17,7 +17,9 @@ namespace Tuckshop.Models
         public int OrderNumber { get; set; }
         [Display(Name = "Date Ordered")]
         [Required]
-        [DataType(DataType.DateTime)]
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{04-09-2023}", ApplyFormatInEditMode = true)]
         public DateTime DateOrdered { get; set; }
         public ICollection<Student> Student { get; set; }
         public ICollection<Food> Food { get; set; }
