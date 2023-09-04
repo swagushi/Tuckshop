@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +10,6 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize(Roles = "Admin, Teacher, Student")]
-
     public class RequestsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -23,52 +20,11 @@ namespace Tuckshop.Views
         }
 
         // GET: Requests
-        public async Task<IActionResult> Index(
-     string sortOrder,
-     string currentFilter,
-     string searchString,
-     int? pageNumber)
+        public async Task<IActionResult> Index()
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-            if (searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewData["CurrentFilter"] = searchString;
-
-            var requests = from s in _context.Request
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                requests = requests.Where(s => s.OrderName.Contains(searchString)
-                                       || s.OrderName.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    requests = requests.OrderByDescending(s => s.OrderName);
-                    break;
-                case "Date":
-                    requests = requests.OrderBy(s => s.OrderName);
-                    break;
-                case "date_desc":
-                    requests = requests.OrderByDescending(s => s.OrderName);
-                    break;
-                default:
-                    requests = requests.OrderBy(s => s.OrderName);
-                    break;
-            }
-
-            int pageSize = 3;
-            return View(await PaginatedList<Request>.CreateAsync(requests.AsNoTracking(), pageNumber ?? 1, pageSize));
+              return _context.Request != null ? 
+                          View(await _context.Request.ToListAsync()) :
+                          Problem("Entity set 'TuckshopContext.Request'  is null.");
         }
 
         // GET: Requests/Details/5
@@ -111,7 +67,6 @@ namespace Tuckshop.Views
             return View(request);
         }
 
-        [Authorize(Roles = "Admin")]
         // GET: Requests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -164,7 +119,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Requests/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Request == null)
@@ -196,14 +150,14 @@ namespace Tuckshop.Views
             {
                 _context.Request.Remove(request);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RequestExists(int id)
         {
-            return (_context.Request?.Any(e => e.RequestID == id)).GetValueOrDefault();
+          return (_context.Request?.Any(e => e.RequestID == id)).GetValueOrDefault();
         }
     }
 }
