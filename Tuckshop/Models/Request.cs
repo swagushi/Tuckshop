@@ -13,7 +13,7 @@ namespace Tuckshop.Models
         public string OrderName { get; set; }
         [Required]
         [Display(Name = "Order Number")]
-        [Range(1, 1000, ErrorMessage = "Please Enter a value between 1 and $1000")]
+        [Range(1, 1000, ErrorMessage = "Please Enter a value between 1 and 1000")]
         public int OrderNumber { get; set; }
         [Display(Name = "Date Ordered")]
         [Required]
@@ -23,3 +23,4 @@ namespace Tuckshop.Models
         public ICollection<Food> Food { get; set; }
     }
 }
+    
