@@ -14,6 +14,9 @@ namespace Tuckshop
 
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDefaultIdentity<TuckshopUser>(options => options.SignIn.RequireConfirmedAccount = false)
+               .AddRoles<IdentityRole>()
+               .AddEntityFrameworkStores<TuckshopContext>();
 
             var connectionString = builder.Configuration.GetConnectionString("TuckshopContextConnection") ?? throw new InvalidOperationException("Connection string 'TuckshopContextConnection' not found.");
             builder.Services.AddTransient<DataSeeder>();
@@ -27,9 +30,18 @@ namespace Tuckshop
             if (args.Length == 1 && args[0].ToLower() == "seeddata")
                 SeedData(app);
 
-            builder.Services.AddDefaultIdentity<TuckshopUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<TuckshopContext>();
+             void SeedData(IHost? app)
+            {
+                var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+                using (var scope = scopedFactory.CreateScope())
+                {
+                    var service = scope.ServiceProvider.GetService<DataSeeder>();
+                    service.Seed();
+                }
+            }
+
+           
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -125,16 +137,7 @@ namespace Tuckshop
             app.Run();
         }
 
-        private static void SeedData(IHost? app)
-        {
-            var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-            using (var scope = scopedFactory.CreateScope())
-            {
-                var service = scope.ServiceProvider.GetService<DataSeeder>();
-                service.Seed();
-            }
-        }
+       
     }
     
 }
