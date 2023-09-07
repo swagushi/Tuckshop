@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Writers;
 using Tuckshop.Areas.Identity.Data;
+using Tuckshop.Models;
+
 namespace Tuckshop
 {
     public class Program
@@ -14,9 +16,16 @@ namespace Tuckshop
 
 
             var connectionString = builder.Configuration.GetConnectionString("TuckshopContextConnection") ?? throw new InvalidOperationException("Connection string 'TuckshopContextConnection' not found.");
+            builder.Services.AddTransient<DataSeeder>();
 
        builder.Services.AddDbContext<TuckshopContext>(options =>
         options.UseSqlServer(connectionString));
+
+
+            var app = builder.Build();
+
+            if (args.Length == 1 && args[0].ToLower() == "seeddata")
+                SeedData(app);
 
             builder.Services.AddDefaultIdentity<TuckshopUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
@@ -25,7 +34,6 @@ namespace Tuckshop
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -116,8 +124,17 @@ namespace Tuckshop
 
             app.Run();
         }
-       
 
+        private static void SeedData(IHost? app)
+        {
+            var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+            using (var scope = scopedFactory.CreateScope())
+            {
+                var service = scope.ServiceProvider.GetService<DataSeeder>();
+                service.Seed();
+            }
+        }
     }
     
 }
