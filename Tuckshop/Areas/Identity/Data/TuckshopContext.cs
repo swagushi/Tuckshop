@@ -30,12 +30,24 @@ public class TuckshopContext : IdentityDbContext<TuckshopUser>
         builder.Entity<Student>().HasData(
             new Student() { StudentID=1 , FirstName = "Josef", LastName = "Fatu", Homeroom = "1" },
             new Student() { StudentID = 2, FirstName = "Rynal", LastName = "Chand", Homeroom = "1" },
-            new Student() { StudentID = 3, FirstName = "Sujal", LastName = "Chand", Homeroom = "1" }
+            new Student() { StudentID = 3, FirstName = "Sujal", LastName = "Chand", Homeroom = "1" },
+            new Student() { StudentID=4, FirstName="Muhammad", LastName="Sherry", Homeroom="2"}
+            
+            );
+
+        builder.Entity<Payment>().HasData(
+             new Payment() { PaymentID = 1, PaymentName = "Connor", PaymentStatement = "Fatu", PaymentAmount = 3 }
+
 
             );
+
+
         base.OnModelCreating(builder);
         builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
     }
+
+    
+
     public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<TuckshopUser>
     {
         public void Configure(EntityTypeBuilder<TuckshopUser> builder)
