@@ -16,3 +16,14 @@ html {
 body {
   margin-bottom: 60px;
 }
+.center{
+    display: block;
+    margin-left;
+    margin-right;
+    width:50%;
+}
+.carousel-inner {
+    width: 700px;
+    height: 630px;
+    object-fit:cover;
+}
