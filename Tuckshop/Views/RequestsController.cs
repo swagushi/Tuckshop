@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Tuckshop.Areas.Identity.Data;
 using Tuckshop.Models;
@@ -74,6 +75,7 @@ namespace Tuckshop.Views
         // GET: Requests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null || _context.Request == null)
             {
                 return NotFound();
@@ -88,6 +90,8 @@ namespace Tuckshop.Views
 
             return View(request);
         }
+        
+
 
         // GET: Requests/Create
         public IActionResult Create()
@@ -100,8 +104,21 @@ namespace Tuckshop.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+     
+
+
+
         public async Task<IActionResult> Create([Bind("RequestID,OrderName,OrderNumber,DateOrdered")] Request request)
         {
+
+            if(request.DateOrdered <= DateTime.Now)
+            {
+                ModelState.AddModelError("", "Cannot choose a date that has already passed");
+                return View(request);
+            }
+
+
             if (!ModelState.IsValid)
             {
                 _context.Add(request);
