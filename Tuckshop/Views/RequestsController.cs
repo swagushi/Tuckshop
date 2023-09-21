@@ -114,7 +114,7 @@ namespace Tuckshop.Views
 
             if(request.DateOrdered <= DateTime.Now)
             {
-                ModelState.AddModelError("", "Cannot choose a date that has already passed");
+                ModelState.AddModelError("", "Cannot select a date that has already passed");
                 return View(request);
             }
 
