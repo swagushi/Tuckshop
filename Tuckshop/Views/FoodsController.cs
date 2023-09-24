@@ -174,6 +174,7 @@ namespace Tuckshop.Views
     }
 }
 
+//enum which lets the user see options when they order the food
 public enum Foods
 {
     Hamburger = 0,

@@ -24,6 +24,6 @@ body {
 }
 .carousel-inner {
     width: 700px;
-    height: 550px;
+    height: 650px;
     object-fit:cover;
 }

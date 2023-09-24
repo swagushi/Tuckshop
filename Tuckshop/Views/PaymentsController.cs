@@ -22,6 +22,8 @@ namespace Tuckshop.Views
         }
 
         // GET: Payments
+
+        ////sort order feature for Payments, sorting the payees names
         public async Task<IActionResult> Index(
       string sortOrder,
       string currentFilter,

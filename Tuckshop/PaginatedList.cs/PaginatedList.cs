@@ -7,6 +7,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop
 {
+    //Links to all the controllers to allow for pagnation 
     public class PaginatedList<T> : List<T>
     {
         public int PageIndex { get; private set; }

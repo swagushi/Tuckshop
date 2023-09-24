@@ -47,12 +47,12 @@ namespace Tuckshop
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
-
+            
             using (var scope = app.Services.CreateScope()) 
             {
                 var roleManager = 
                     scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
+                //creating roles
                 var roles = new[] { "Admin", "Teacher", "Student" };
 
                 foreach (var role in roles) 
@@ -65,6 +65,7 @@ namespace Tuckshop
 
             using (var scope = app.Services.CreateScope())
             {
+                //assigning roles 
                 var userManager =
                     scope.ServiceProvider.GetRequiredService<UserManager<TuckshopUser>>();
 

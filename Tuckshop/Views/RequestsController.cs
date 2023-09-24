@@ -24,6 +24,8 @@ namespace Tuckshop.Views
         }
 
         // GET: Requests
+
+        //sort order feature for requests, sorting by ordername 
         public async Task<IActionResult> Index(
      string sortOrder,
      string currentFilter,

@@ -23,6 +23,8 @@ namespace Tuckshop.Views
         }
 
         // GET: Students
+
+        //sort order feature for students decending from firstname to lastname
         public async Task<IActionResult> Index(
      string sortOrder,
      string currentFilter,
@@ -66,7 +68,8 @@ namespace Tuckshop.Views
                     students = students.OrderBy(s => s.LastName);
                     break;
             }
-
+            // controls how many listings will display on the page, linking to the pagnatedlist.cs
+            
             int pageSize = 3;
             return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
@@ -207,6 +210,7 @@ namespace Tuckshop.Views
     }
 }
 
+//enum which lets the admin see the homerooms when adding a student to the database
 public enum HomeRoom
 {
     EKR = 0, 
