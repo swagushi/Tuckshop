@@ -24,11 +24,12 @@ namespace Tuckshop.Views
         // GET: Payments
 
         ////sort order feature for Payments, sorting the payees names
+       
         public async Task<IActionResult> Index(
-      string sortOrder,
-      string currentFilter,
-      string searchString,
-      int? pageNumber)
+        string sortOrder,
+        string currentFilter,
+        string searchString,
+        int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -49,8 +50,8 @@ namespace Tuckshop.Views
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                payments = payments.Where(s => s.PaymentName.Contains(searchString)
-                                       || s.PaymentName.Contains(searchString));
+                payments = payments.Where(s => s.PaymentName.Contains(searchString));
+                                      
             }
             switch (sortOrder)
             {
@@ -58,20 +59,19 @@ namespace Tuckshop.Views
                     payments = payments.OrderByDescending(s => s.PaymentName);
                     break;
                 case "Date":
-                    payments = payments.OrderBy(s => s.PaymentName);
+                    payments = payments.OrderBy(s => s.PaymentAmount);
                     break;
                 case "date_desc":
                     payments = payments.OrderByDescending(s => s.PaymentName);
                     break;
                 default:
-                    payments = payments.OrderBy(s => s.PaymentName);
+                    payments = payments.OrderBy(s => s.PaymentAmount);
                     break;
             }
 
             int pageSize = 3;
             return View(await PaginatedList<Payment>.CreateAsync(payments.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
-
         // GET: Payments/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -10,10 +10,12 @@
     <a asp-action="Create">Create Order</a>
 </p>
 
-<p>
-    Orders Search: <input type="text" name="SearchString" />
-    <input type="submit" value="Filter" />
-</p>
+<form asp-controller="Payments" asp-action="Index">
+    <p>
+        Payees: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 
 <table class="table">
     <thead>
