@@ -60,13 +60,13 @@ namespace Tuckshop.Views
                     requests = requests.OrderByDescending(s => s.OrderName);
                     break;
                 case "Date":
-                    requests = requests.OrderBy(s => s.OrderName);
+                    requests = requests.OrderBy(s => s.DateOrdered);
                     break;
                 case "date_desc":
                     requests = requests.OrderByDescending(s => s.OrderName);
                     break;
                 default:
-                    requests = requests.OrderBy(s => s.OrderName);
+                    requests = requests.OrderBy(s => s.DateOrdered);
                     break;
             }
 
