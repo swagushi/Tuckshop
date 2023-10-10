@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +10,6 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize(Roles = "Admin")]
     public class StudentsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -23,55 +20,11 @@ namespace Tuckshop.Views
         }
 
         // GET: Students
-
-        //sort order feature for students decending from firstname to lastname
-        public async Task<IActionResult> Index(
-     string sortOrder,
-     string currentFilter,
-     string searchString,
-     int? pageNumber)
+        public async Task<IActionResult> Index()
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-            if (searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewData["CurrentFilter"] = searchString;
-
-            var students = from s in _context.Student
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                students = students.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    students = students.OrderByDescending(s => s.LastName);
-                    break;
-                case "Date":
-                    students = students.OrderBy(s => s.FirstName);
-                    break;
-                case "date_desc":
-                    students = students.OrderByDescending(s => s.FirstName);
-                    break;
-                default:
-                    students = students.OrderBy(s => s.LastName);
-                    break;
-            }
-            // controls how many listings will display on the page, linking to the pagnatedlist.cs
-            
-            int pageSize = 3;
-            return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
+              return _context.Student != null ? 
+                          View(await _context.Student.ToListAsync()) :
+                          Problem("Entity set 'TuckshopContext.Student'  is null.");
         }
 
         // GET: Students/Details/5
@@ -93,7 +46,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Students/Create
-      
         public IActionResult Create()
         {
             return View();
@@ -143,7 +95,7 @@ namespace Tuckshop.Views
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -210,19 +162,9 @@ namespace Tuckshop.Views
     }
 }
 
-//enum which lets the admin see the homerooms when adding a student to the database
 public enum HomeRoom
 {
-    EKR = 0, 
-    EKO = 1,
-    LMG = 2,
-    WNY = 3,
-    PLY = 4,
-    ENU = 5,
-    BLD = 6,
-    WNT = 7,
-    SEG = 8,
-    ABC = 9,
-    BDA = 10,
-    CGA = 11,
+    END = 0,
+    MAY = 1,
+    LAY = 2,
 }

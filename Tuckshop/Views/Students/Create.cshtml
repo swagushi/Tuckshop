@@ -1,10 +1,10 @@
 ﻿@model Tuckshop.Models.Student
 
 @{
-    ViewData["Title"] = "Add a student";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Add a student</h1>
+<h1>Create</h1>
 
 <h4>Student</h4>
 <hr />
@@ -12,7 +12,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -23,7 +22,6 @@
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="Homeroom" class="control-label"></label>
                 <select asp-for="Homeroom" class="form-control" asp-items="Html.GetEnumSelectList<HomeRoom>()">
@@ -31,8 +29,6 @@
                 </select>
                 <span asp-validation-for="Homeroom" class="text-danger"></span>
             </div>
-
-           
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -41,11 +37,8 @@
 </div>
 
 <div>
-    <a asp-action="Index">Cancel</a>
+    <a asp-action="Index">Back to List</a>
 </div>
-
-
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

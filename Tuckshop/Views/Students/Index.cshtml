@@ -1,30 +1,25 @@
-﻿@model PaginatedList<Tuckshop.Models.Student>
+﻿@model IEnumerable<Tuckshop.Models.Student>
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Students</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Add Student</a>
+    <a asp-action="Create">Create New</a>
 </p>
-<form asp-controller="Students" asp-action="Index">
-    <p>
-        Student Search: <input type="text" name="SearchString" />
-        <input type="submit" value="Filter" />
-    </p>
-</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">First Name</a>
+                @Html.DisplayNameFor(model => model.FirstName)
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Last Name</a>
+                @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
-                Homeroom 
+                @Html.DisplayNameFor(model => model.Homeroom)
             </th>
             <th></th>
         </tr>
@@ -50,23 +45,3 @@
 }
     </tbody>
 </table>
-
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
