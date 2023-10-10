@@ -34,8 +34,12 @@ namespace Tuckshop.Models
         public DateTime DateOrdered { get; set; }
 
         public int FoodID { get; set; }
+        public int StudentID { get; set; }
+        public int PaymentID { get; set; }
 
+        public Student Student { get; set; }
         public Food food { get; set; }
+        public Payment Payment { get; set; }
     }
 }
     

@@ -39,7 +39,7 @@ namespace Tuckshop.Models
         //if they do they will see this error message
         public string PaymentStatement { get; set; }
 
-        public ICollection<Request> Request { get; set; }
+        public Request Request { get; set; }
 
     }
 }
