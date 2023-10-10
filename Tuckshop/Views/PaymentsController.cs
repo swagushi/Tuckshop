@@ -32,7 +32,7 @@ namespace Tuckshop.Views
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
 
             if (searchString != null)
             {
@@ -49,8 +49,8 @@ namespace Tuckshop.Views
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                payments = payments.Where(s => s.PaymentName.Contains(searchString)
-                                       || s.PaymentName.Contains(searchString));
+                payments = payments.Where(s => s.PaymentName.Contains(searchString));
+                                       
             }
             switch (sortOrder)
             {

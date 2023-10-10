@@ -25,7 +25,6 @@ namespace Tuckshop.Models
         //The user must input a number between $1 and $100, if they do they will see an error message
         [DataType(DataType.Currency)]
         public decimal Amount { get; set; }
-        public ICollection<Student> Student { get; set; }
         public ICollection<Request> Request { get; set; }
     }
 }

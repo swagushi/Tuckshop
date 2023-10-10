@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tuckshop.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using Tuckshop.Areas.Identity.Data;
 namespace Tuckshop.Migrations
 {
     [DbContext(typeof(TuckshopContext))]
-    partial class TuckshopContextModelSnapshot : ModelSnapshot
+    [Migration("20231009020954_fixing payments search")]
+    partial class fixingpaymentssearch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace Tuckshop.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("FoodRequest", b =>
+                {
+                    b.Property<int>("FoodID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequestID")
+                        .HasColumnType("int");
+
+                    b.HasKey("FoodID", "RequestID");
+
+                    b.HasIndex("RequestID");
+
+                    b.ToTable("FoodRequest");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -266,12 +283,7 @@ namespace Tuckshop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RequestID")
-                        .HasColumnType("int");
-
                     b.HasKey("FoodID");
-
-                    b.HasIndex("RequestID");
 
                     b.ToTable("Food");
                 });
@@ -353,6 +365,9 @@ namespace Tuckshop.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("FoodID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Homeroom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -366,6 +381,8 @@ namespace Tuckshop.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("StudentID");
+
+                    b.HasIndex("FoodID");
 
                     b.HasIndex("PaymentID");
 
@@ -400,6 +417,21 @@ namespace Tuckshop.Migrations
                             Homeroom = "2",
                             LastName = "Sherry"
                         });
+                });
+
+            modelBuilder.Entity("FoodRequest", b =>
+                {
+                    b.HasOne("Tuckshop.Models.Food", null)
+                        .WithMany()
+                        .HasForeignKey("FoodID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tuckshop.Models.Request", null)
+                        .WithMany()
+                        .HasForeignKey("RequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -468,13 +500,6 @@ namespace Tuckshop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tuckshop.Models.Food", b =>
-                {
-                    b.HasOne("Tuckshop.Models.Request", null)
-                        .WithMany("Food")
-                        .HasForeignKey("RequestID");
-                });
-
             modelBuilder.Entity("Tuckshop.Models.Request", b =>
                 {
                     b.HasOne("Tuckshop.Models.Payment", null)
@@ -484,9 +509,18 @@ namespace Tuckshop.Migrations
 
             modelBuilder.Entity("Tuckshop.Models.Student", b =>
                 {
+                    b.HasOne("Tuckshop.Models.Food", null)
+                        .WithMany("Student")
+                        .HasForeignKey("FoodID");
+
                     b.HasOne("Tuckshop.Models.Payment", null)
                         .WithMany("Student")
                         .HasForeignKey("PaymentID");
+                });
+
+            modelBuilder.Entity("Tuckshop.Models.Food", b =>
+                {
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Tuckshop.Models.Payment", b =>
@@ -494,11 +528,6 @@ namespace Tuckshop.Migrations
                     b.Navigation("Request");
 
                     b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("Tuckshop.Models.Request", b =>
-                {
-                    b.Navigation("Food");
                 });
 #pragma warning restore 612, 618
         }

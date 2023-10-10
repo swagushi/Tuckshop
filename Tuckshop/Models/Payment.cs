@@ -38,7 +38,7 @@ namespace Tuckshop.Models
          ErrorMessage = "Characters are not allowed.")]
         //if they do they will see this error message
         public string PaymentStatement { get; set; }
-        public ICollection<Student> Student { get; set; }
+
         public ICollection<Request> Request { get; set; }
 
     }

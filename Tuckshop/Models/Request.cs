@@ -32,8 +32,10 @@ namespace Tuckshop.Models
         [DataType(DataType.Date)]
         //The user will only have to enter the date instead of the date and time 
         public DateTime DateOrdered { get; set; }
-        public ICollection<Student> Student { get; set; }
-        public ICollection<Food> Food { get; set; }
+
+        public int FoodID { get; set; }
+
+        public Food food { get; set; }
     }
 }
     
