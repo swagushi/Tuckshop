@@ -38,7 +38,7 @@ namespace Tuckshop.Models
         public int PaymentID { get; set; }
 
         public Student Student { get; set; }
-        public Food food { get; set; }
+        public Food Food { get; set; }
         public Payment Payment { get; set; }
     }
 }
