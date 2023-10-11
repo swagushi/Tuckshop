@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tuckshop.Migrations
 {
-    public partial class students : Migration
+    public partial class allviewsadded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -210,9 +210,9 @@ namespace Tuckshop.Migrations
                     OrderName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
                     DateOrdered = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FoodID = table.Column<int>(type: "int", nullable: true),
-                    StudentID = table.Column<int>(type: "int", nullable: true),
-                    PaymentID = table.Column<int>(type: "int", nullable: true)
+                    FoodID = table.Column<int>(type: "int", nullable: false),
+                    StudentID = table.Column<int>(type: "int", nullable: false),
+                    PaymentID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -221,17 +221,20 @@ namespace Tuckshop.Migrations
                         name: "FK_Request_Food_FoodID",
                         column: x => x.FoodID,
                         principalTable: "Food",
-                        principalColumn: "FoodID");
+                        principalColumn: "FoodID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Request_Payment_PaymentID",
                         column: x => x.PaymentID,
                         principalTable: "Payment",
-                        principalColumn: "PaymentID");
+                        principalColumn: "PaymentID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Request_Student_StudentID",
                         column: x => x.StudentID,
                         principalTable: "Student",
-                        principalColumn: "StudentID");
+                        principalColumn: "StudentID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -298,8 +301,7 @@ namespace Tuckshop.Migrations
                 name: "IX_Request_PaymentID",
                 table: "Request",
                 column: "PaymentID",
-                unique: true,
-                filter: "[PaymentID] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Request_StudentID",

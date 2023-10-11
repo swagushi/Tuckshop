@@ -12,14 +12,14 @@ using Tuckshop.Areas.Identity.Data;
 namespace Tuckshop.Migrations
 {
     [DbContext(typeof(TuckshopContext))]
-    [Migration("20231011204130_Payments")]
-    partial class Payments
+    [Migration("20231011215035_all views added")]
+    partial class allviewsadded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.21")
+                .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -304,7 +304,7 @@ namespace Tuckshop.Migrations
                     b.Property<DateTime>("DateOrdered")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FoodID")
+                    b.Property<int>("FoodID")
                         .HasColumnType("int");
 
                     b.Property<string>("OrderName")
@@ -315,10 +315,10 @@ namespace Tuckshop.Migrations
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PaymentID")
+                    b.Property<int>("PaymentID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentID")
+                    b.Property<int>("StudentID")
                         .HasColumnType("int");
 
                     b.HasKey("RequestID");
@@ -326,8 +326,7 @@ namespace Tuckshop.Migrations
                     b.HasIndex("FoodID");
 
                     b.HasIndex("PaymentID")
-                        .IsUnique()
-                        .HasFilter("[PaymentID] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("StudentID");
 
@@ -446,15 +445,21 @@ namespace Tuckshop.Migrations
                 {
                     b.HasOne("Tuckshop.Models.Food", "Food")
                         .WithMany("Request")
-                        .HasForeignKey("FoodID");
+                        .HasForeignKey("FoodID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Tuckshop.Models.Payment", "Payment")
                         .WithOne("Request")
-                        .HasForeignKey("Tuckshop.Models.Request", "PaymentID");
+                        .HasForeignKey("Tuckshop.Models.Request", "PaymentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Tuckshop.Models.Student", "Student")
                         .WithMany("Request")
-                        .HasForeignKey("StudentID");
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Food");
 
