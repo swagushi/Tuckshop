@@ -68,7 +68,7 @@ namespace Tuckshop.Views
             }
             // controls how many listings will display on the page, linking to the pagnatedlist.cs
 
-            int pageSize = 3;
+            int pageSize = 5;
             return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
