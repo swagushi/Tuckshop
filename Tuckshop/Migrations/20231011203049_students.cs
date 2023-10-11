@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tuckshop.Migrations
 {
-    public partial class studentviewadded : Migration
+    public partial class students : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,6 +78,21 @@ namespace Tuckshop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payment", x => x.PaymentID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Student",
+                columns: table => new
+                {
+                    StudentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Homeroom = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Student", x => x.StudentID);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,91 +210,28 @@ namespace Tuckshop.Migrations
                     OrderName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
                     DateOrdered = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FoodID = table.Column<int>(type: "int", nullable: true),
+                    StudentID = table.Column<int>(type: "int", nullable: true),
                     PaymentID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Request", x => x.RequestID);
                     table.ForeignKey(
-                        name: "FK_Request_Payment_PaymentID",
-                        column: x => x.PaymentID,
-                        principalTable: "Payment",
-                        principalColumn: "PaymentID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Student",
-                columns: table => new
-                {
-                    StudentID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Homeroom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FoodID = table.Column<int>(type: "int", nullable: true),
-                    PaymentID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Student", x => x.StudentID);
-                    table.ForeignKey(
-                        name: "FK_Student_Food_FoodID",
+                        name: "FK_Request_Food_FoodID",
                         column: x => x.FoodID,
                         principalTable: "Food",
                         principalColumn: "FoodID");
                     table.ForeignKey(
-                        name: "FK_Student_Payment_PaymentID",
+                        name: "FK_Request_Payment_PaymentID",
                         column: x => x.PaymentID,
                         principalTable: "Payment",
                         principalColumn: "PaymentID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FoodRequest",
-                columns: table => new
-                {
-                    FoodID = table.Column<int>(type: "int", nullable: false),
-                    RequestID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FoodRequest", x => new { x.FoodID, x.RequestID });
                     table.ForeignKey(
-                        name: "FK_FoodRequest_Food_FoodID",
-                        column: x => x.FoodID,
-                        principalTable: "Food",
-                        principalColumn: "FoodID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FoodRequest_Request_RequestID",
-                        column: x => x.RequestID,
-                        principalTable: "Request",
-                        principalColumn: "RequestID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RequestStudent",
-                columns: table => new
-                {
-                    RequestID = table.Column<int>(type: "int", nullable: false),
-                    StudentID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RequestStudent", x => new { x.RequestID, x.StudentID });
-                    table.ForeignKey(
-                        name: "FK_RequestStudent_Request_RequestID",
-                        column: x => x.RequestID,
-                        principalTable: "Request",
-                        principalColumn: "RequestID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RequestStudent_Student_StudentID",
+                        name: "FK_Request_Student_StudentID",
                         column: x => x.StudentID,
                         principalTable: "Student",
-                        principalColumn: "StudentID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "StudentID");
                 });
 
             migrationBuilder.InsertData(
@@ -289,13 +241,13 @@ namespace Tuckshop.Migrations
 
             migrationBuilder.InsertData(
                 table: "Student",
-                columns: new[] { "StudentID", "FirstName", "FoodID", "Homeroom", "LastName", "PaymentID" },
+                columns: new[] { "StudentID", "FirstName", "Homeroom", "LastName" },
                 values: new object[,]
                 {
-                    { 1, "Josef", null, "1", "Fatu", null },
-                    { 2, "Rynal", null, "1", "Chand", null },
-                    { 3, "Sujal", null, "1", "Chand", null },
-                    { 4, "Muhammad", null, "2", "Sherry", null }
+                    { 1, "Josef", "1", "Fatu" },
+                    { 2, "Rynal", "1", "Chand" },
+                    { 3, "Sujal", "1", "Chand" },
+                    { 4, "Muhammad", "2", "Sherry" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -338,29 +290,21 @@ namespace Tuckshop.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FoodRequest_RequestID",
-                table: "FoodRequest",
-                column: "RequestID");
+                name: "IX_Request_FoodID",
+                table: "Request",
+                column: "FoodID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Request_PaymentID",
                 table: "Request",
-                column: "PaymentID");
+                column: "PaymentID",
+                unique: true,
+                filter: "[PaymentID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RequestStudent_StudentID",
-                table: "RequestStudent",
+                name: "IX_Request_StudentID",
+                table: "Request",
                 column: "StudentID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Student_FoodID",
-                table: "Student",
-                column: "FoodID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Student_PaymentID",
-                table: "Student",
-                column: "PaymentID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -381,10 +325,7 @@ namespace Tuckshop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "FoodRequest");
-
-            migrationBuilder.DropTable(
-                name: "RequestStudent");
+                name: "Request");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -393,16 +334,13 @@ namespace Tuckshop.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Request");
-
-            migrationBuilder.DropTable(
-                name: "Student");
-
-            migrationBuilder.DropTable(
                 name: "Food");
 
             migrationBuilder.DropTable(
                 name: "Payment");
+
+            migrationBuilder.DropTable(
+                name: "Student");
         }
     }
 }

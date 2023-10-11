@@ -4,7 +4,7 @@
 
 namespace Tuckshop.Migrations
 {
-    public partial class erdmadness : Migration
+    public partial class requests : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

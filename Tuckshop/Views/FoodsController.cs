@@ -10,87 +10,87 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    public class StudentsController : Controller
+    public class FoodsController : Controller
     {
         private readonly TuckshopContext _context;
 
-        public StudentsController(TuckshopContext context)
+        public FoodsController(TuckshopContext context)
         {
             _context = context;
         }
 
-        // GET: Students
+        // GET: Foods
         public async Task<IActionResult> Index()
         {
-              return _context.Student != null ? 
-                          View(await _context.Student.ToListAsync()) :
-                          Problem("Entity set 'TuckshopContext.Student'  is null.");
+              return _context.Food != null ? 
+                          View(await _context.Food.ToListAsync()) :
+                          Problem("Entity set 'TuckshopContext.Food'  is null.");
         }
 
-        // GET: Students/Details/5
+        // GET: Foods/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Student == null)
+            if (id == null || _context.Food == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.StudentID == id);
-            if (student == null)
+            var food = await _context.Food
+                .FirstOrDefaultAsync(m => m.FoodID == id);
+            if (food == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(food);
         }
 
-        // GET: Students/Create
+        // GET: Foods/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+        // POST: Foods/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentID,FirstName,LastName,Homeroom")] Student student)
+        public async Task<IActionResult> Create([Bind("FoodID,FoodName,DrinkName,Amount")] Food food)
         {
             if (!ModelState.IsValid)
             {
-                _context.Add(student);
+                _context.Add(food);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(food);
         }
 
-        // GET: Students/Edit/5
+        // GET: Foods/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Student == null)
+            if (id == null || _context.Food == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Student.FindAsync(id);
-            if (student == null)
+            var food = await _context.Food.FindAsync(id);
+            if (food == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View(food);
         }
 
-        // POST: Students/Edit/5
+        // POST: Foods/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentID,FirstName,LastName,Homeroom")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("FoodID,FoodName,DrinkName,Amount")] Food food)
         {
-            if (id != student.StudentID)
+            if (id != food.FoodID)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace Tuckshop.Views
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(food);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.StudentID))
+                    if (!FoodExists(food.FoodID))
                     {
                         return NotFound();
                     }
@@ -115,49 +115,49 @@ namespace Tuckshop.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(food);
         }
 
-        // GET: Students/Delete/5
+        // GET: Foods/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Student == null)
+            if (id == null || _context.Food == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.StudentID == id);
-            if (student == null)
+            var food = await _context.Food
+                .FirstOrDefaultAsync(m => m.FoodID == id);
+            if (food == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(food);
         }
 
-        // POST: Students/Delete/5
+        // POST: Foods/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Student == null)
+            if (_context.Food == null)
             {
-                return Problem("Entity set 'TuckshopContext.Student'  is null.");
+                return Problem("Entity set 'TuckshopContext.Food'  is null.");
             }
-            var student = await _context.Student.FindAsync(id);
-            if (student != null)
+            var food = await _context.Food.FindAsync(id);
+            if (food != null)
             {
-                _context.Student.Remove(student);
+                _context.Food.Remove(food);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(int id)
+        private bool FoodExists(int id)
         {
-          return (_context.Student?.Any(e => e.StudentID == id)).GetValueOrDefault();
+          return (_context.Food?.Any(e => e.FoodID == id)).GetValueOrDefault();
         }
     }
 }
