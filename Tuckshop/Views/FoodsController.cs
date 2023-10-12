@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -22,19 +23,52 @@ namespace Tuckshop.Views
         }
 
         // GET: Foods
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(
+         string sortOrder,
+         string currentFilter,
+         string searchString,
+         int? pageNumber)
         {
-            var foods = from m in _context.Food
-                        select m;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
-
-            if (!string.IsNullOrEmpty(searchString))
+            if (searchString != null)
             {
-
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
             }
 
-            return View(await foods.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
 
+            var foods = from s in _context.Food
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                foods = foods.Where(s => s.FoodName.Contains(searchString));
+
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    foods = foods.OrderByDescending(s => s.FoodName);
+                    break;
+                case "Date":
+                    foods = foods.OrderBy(s => s.DrinkName);
+                    break;
+                case "date_desc":
+                    foods = foods.OrderByDescending(s => s.FoodName);
+                    break;
+                default:
+                    foods = foods.OrderBy(s => s.DrinkName);
+                    break;
+            }
+
+            int pageSize = 5;
+            return View(await PaginatedList<Food>.CreateAsync(foods.AsNoTracking(), pageNumber ?? 1 , pageSize));
         }
 
         // GET: Foods/Details/5
@@ -78,7 +112,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Foods/Edit/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Food == null)
@@ -106,7 +139,7 @@ namespace Tuckshop.Views
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -130,7 +163,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Foods/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Food == null)
@@ -162,14 +194,14 @@ namespace Tuckshop.Views
             {
                 _context.Food.Remove(food);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FoodExists(int id)
         {
-            return (_context.Food?.Any(e => e.FoodID == id)).GetValueOrDefault();
+          return (_context.Food?.Any(e => e.FoodID == id)).GetValueOrDefault();
         }
     }
 }

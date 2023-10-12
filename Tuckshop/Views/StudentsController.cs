@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +11,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles="Admin")]
     public class StudentsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -23,7 +22,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Students
-
         //sort order feature for students decending from firstname to lastname
         public async Task<IActionResult> Index(
      string sortOrder,
@@ -69,8 +67,8 @@ namespace Tuckshop.Views
                     break;
             }
             // controls how many listings will display on the page, linking to the pagnatedlist.cs
-            
-            int pageSize = 3;
+
+            int pageSize = 5;
             return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
@@ -93,7 +91,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Students/Create
-      
         public IActionResult Create()
         {
             return View();
@@ -143,7 +140,7 @@ namespace Tuckshop.Views
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -213,7 +210,7 @@ namespace Tuckshop.Views
 //enum which lets the admin see the homerooms when adding a student to the database
 public enum HomeRoom
 {
-    EKR = 0, 
+    EKR = 0,
     EKO = 1,
     LMG = 2,
     WNY = 3,

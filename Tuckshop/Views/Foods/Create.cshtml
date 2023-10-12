@@ -1,18 +1,17 @@
 ﻿@model Tuckshop.Models.Food
 
 @{
-    ViewData["Title"] = "Order Food";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Food</h1>
+<h1>Menu</h1>
 
-<h4></h4>
+<h4>Food</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
             <div class="form-group">
                 <label asp-for="FoodName" class="control-label"></label>
                 <select asp-for="FoodName" class="form-control" asp-items="Html.GetEnumSelectList<Foods>()">
@@ -20,16 +19,13 @@
                 </select>
                 <span asp-validation-for="FoodName" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="DrinkName" class="control-label"></label>
-                <select asp-for="DrinkName" class="form-control" asp-items="Html.GetEnumSelectList<Drinks>()">
+                <select asp-for="DrinkName" class="form-control" asp-items="Html.GetEnumSelectList<Foods>()">
                     <option value="">Select</option>
                 </select>
                 <span asp-validation-for="DrinkName" class="text-danger"></span>
             </div>
-
-
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
                 <input asp-for="Amount" class="form-control" />
@@ -43,7 +39,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Cancel</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

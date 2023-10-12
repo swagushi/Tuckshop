@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Tuckshop.Areas.Identity.Data;
 using Tuckshop.Models;
@@ -13,7 +13,6 @@ using Tuckshop.Models;
 namespace Tuckshop.Views
 {
     [Authorize(Roles = "Admin, Teacher, Student")]
-
     public class RequestsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -24,7 +23,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Requests
-
         //sort order feature for requests, sorting by ordername 
         public async Task<IActionResult> Index(
      string sortOrder,
@@ -51,9 +49,10 @@ namespace Tuckshop.Views
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                requests = requests.Where(s => s.OrderName.Contains(searchString)
-                                       || s.OrderName.Contains(searchString));
+                requests = requests.Where(s => s.OrderName.Contains(searchString));
+                                       
             }
+
             switch (sortOrder)
             {
                 case "name_desc":
@@ -70,20 +69,22 @@ namespace Tuckshop.Views
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 5;
             return View(await PaginatedList<Request>.CreateAsync(requests.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Requests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-
             if (id == null || _context.Request == null)
             {
                 return NotFound();
             }
 
             var request = await _context.Request
+                .Include(r => r.Food)
+                .Include(r => r.Payment)
+                .Include(r => r.Student)
                 .FirstOrDefaultAsync(m => m.RequestID == id);
             if (request == null)
             {
@@ -92,12 +93,13 @@ namespace Tuckshop.Views
 
             return View(request);
         }
-        
-
 
         // GET: Requests/Create
         public IActionResult Create()
         {
+            ViewData["FoodID"] = new SelectList(_context.Food, "FoodID", "DrinkName");
+            ViewData["PaymentID"] = new SelectList(_context.Payment, "PaymentID", "PaymentName");
+            ViewData["StudentID"] = new SelectList(_context.Student, "StudentID", "FirstName");
             return View();
         }
 
@@ -106,20 +108,13 @@ namespace Tuckshop.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-     
-
-
-
-        public async Task<IActionResult> Create([Bind("RequestID,OrderName,OrderNumber,DateOrdered")] Request request)
+        public async Task<IActionResult> Create([Bind("RequestID,OrderName,OrderNumber,DateOrdered,FoodID,StudentID,PaymentID")] Request request)
         {
-
-            if(request.DateOrdered <= DateTime.Now)
+            if (request.DateOrdered <= DateTime.Now)
             {
-                ModelState.AddModelError("", "Cannot select a date that has already passed");
+                ModelState.AddModelError("", "Cannot choose a date that has already passed");
                 return View(request);
             }
-
 
             if (!ModelState.IsValid)
             {
@@ -127,10 +122,12 @@ namespace Tuckshop.Views
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FoodID"] = new SelectList(_context.Food, "FoodID", "DrinkName", request.FoodID);
+            ViewData["PaymentID"] = new SelectList(_context.Payment, "PaymentID", "PaymentName", request.PaymentID);
+            ViewData["StudentID"] = new SelectList(_context.Student, "StudentID", "FirstName", request.StudentID);
             return View(request);
         }
 
-        [Authorize(Roles = "Admin")]
         // GET: Requests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -144,6 +141,9 @@ namespace Tuckshop.Views
             {
                 return NotFound();
             }
+            ViewData["FoodID"] = new SelectList(_context.Food, "FoodID", "DrinkName", request.FoodID);
+            ViewData["PaymentID"] = new SelectList(_context.Payment, "PaymentID", "PaymentName", request.PaymentID);
+            ViewData["StudentID"] = new SelectList(_context.Student, "StudentID", "FirstName", request.StudentID);
             return View(request);
         }
 
@@ -152,7 +152,7 @@ namespace Tuckshop.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestID,OrderName,OrderNumber,DateOrdered")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestID,OrderName,OrderNumber,DateOrdered,FoodID,StudentID,PaymentID")] Request request)
         {
             if (id != request.RequestID)
             {
@@ -179,11 +179,13 @@ namespace Tuckshop.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FoodID"] = new SelectList(_context.Food, "FoodID", "DrinkName", request.FoodID);
+            ViewData["PaymentID"] = new SelectList(_context.Payment, "PaymentID", "PaymentName", request.PaymentID);
+            ViewData["StudentID"] = new SelectList(_context.Student, "StudentID", "FirstName", request.StudentID);
             return View(request);
         }
 
         // GET: Requests/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Request == null)
@@ -192,6 +194,9 @@ namespace Tuckshop.Views
             }
 
             var request = await _context.Request
+                .Include(r => r.Food)
+                .Include(r => r.Payment)
+                .Include(r => r.Student)
                 .FirstOrDefaultAsync(m => m.RequestID == id);
             if (request == null)
             {
@@ -215,14 +220,14 @@ namespace Tuckshop.Views
             {
                 _context.Request.Remove(request);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RequestExists(int id)
         {
-            return (_context.Request?.Any(e => e.RequestID == id)).GetValueOrDefault();
+          return (_context.Request?.Any(e => e.RequestID == id)).GetValueOrDefault();
         }
     }
 }

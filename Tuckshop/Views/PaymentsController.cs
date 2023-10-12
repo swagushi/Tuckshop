@@ -11,7 +11,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize(Roles = "Admin, Teacher, Student")]
+    [Authorize(Roles ="Admin, Teacher, Student")]
     public class PaymentsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -24,7 +24,7 @@ namespace Tuckshop.Views
         // GET: Payments
 
         ////sort order feature for Payments, sorting the payees names
-       
+
         public async Task<IActionResult> Index(
         string sortOrder,
         string currentFilter,
@@ -51,7 +51,7 @@ namespace Tuckshop.Views
             if (!String.IsNullOrEmpty(searchString))
             {
                 payments = payments.Where(s => s.PaymentName.Contains(searchString));
-                                      
+
             }
             switch (sortOrder)
             {
@@ -69,9 +69,10 @@ namespace Tuckshop.Views
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 5;
             return View(await PaginatedList<Payment>.CreateAsync(payments.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
+
         // GET: Payments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -113,7 +114,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Payments/Edit/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Payment == null)
@@ -141,7 +141,7 @@ namespace Tuckshop.Views
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -165,7 +165,6 @@ namespace Tuckshop.Views
         }
 
         // GET: Payments/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Payment == null)
