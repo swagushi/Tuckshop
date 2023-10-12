@@ -5,13 +5,13 @@ namespace Tuckshop.Models
     public class Food
     {
         public int FoodID { get; set; }
-        [Required]
+       
         //the user cannot create an order without selecting the FoodName field 
         [Display(Name = "Food Name")]
         //instead of seeing FoodName they will see Food Name
         public string FoodName { get; set; }
 
-        [Required]
+    
         //The user cannot create an order without selecting the DrinkName field 
         [Display(Name = "Drink Name")]
         //the user will see Drink Name instead of DrinkName

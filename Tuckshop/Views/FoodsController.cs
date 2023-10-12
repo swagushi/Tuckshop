@@ -57,13 +57,13 @@ namespace Tuckshop.Views
                     foods = foods.OrderByDescending(s => s.FoodName);
                     break;
                 case "Date":
-                    foods = foods.OrderBy(s => s.FoodName);
+                    foods = foods.OrderBy(s => s.DrinkName);
                     break;
                 case "date_desc":
                     foods = foods.OrderByDescending(s => s.FoodName);
                     break;
                 default:
-                    foods = foods.OrderBy(s => s.FoodName);
+                    foods = foods.OrderBy(s => s.DrinkName);
                     break;
             }
 

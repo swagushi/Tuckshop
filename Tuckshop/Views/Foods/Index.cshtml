@@ -25,10 +25,12 @@
     <thead>
         <tr>
             <th>
-                Food Name
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Food Name</a>
+            </th>
             </th>
             <th>
-                Drink Name
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Drink Name</a>
+            </th>
             </th>
             <th>
                 Amount Due
