@@ -21,7 +21,7 @@ namespace Tuckshop.Models
         //The user cannot create an order without inputing something in the Amount field
         [Display(Name = "Food Amount")]
         //the user will see Food Amount instead of Amount
-        [Range(1, 100, ErrorMessage = "Please Enter atleast $1")]
+        [Range(1, 10000, ErrorMessage = "You must enter between $1-10,000")]
         //The user must input a number between $1 and $100, if they do they will see an error message
         [DataType(DataType.Currency)]
         public decimal Amount { get; set; }

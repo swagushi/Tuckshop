@@ -33,7 +33,7 @@ namespace Tuckshop.Models
         //The user will only have to enter the date instead of the date and time 
         public DateTime DateOrdered { get; set; }
 
-        public int FoodID { get; set; }
+        public int? FoodID { get; set; }
         public int StudentID { get; set; }
         public int PaymentID { get; set; }
 

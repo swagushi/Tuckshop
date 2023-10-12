@@ -21,7 +21,7 @@ namespace Tuckshop.Models
         //the user cannot make a payment without filling out the PaymentAmount field 
         [Display(Name = "Payment Amount")]
         //the user will see Payment Amount instead of PaymentAmount
-        [Range(1,100, ErrorMessage ="Please Enter between $1 and $100")]
+        [Range(1,10000, ErrorMessage ="Please Enter between $1 and $10,000")]
         //the user can only add a min of 1 and a max of 100
         [DataType(DataType.Currency)]
         //when the user makes a payment infront of the number will be a $
