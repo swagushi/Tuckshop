@@ -49,9 +49,10 @@ namespace Tuckshop.Views
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                requests = requests.Where(s => s.OrderName.Contains(searchString)
-                                       || s.OrderName.Contains(searchString));
+                requests = requests.Where(s => s.OrderName.Contains(searchString));
+                                       
             }
+
             switch (sortOrder)
             {
                 case "name_desc":

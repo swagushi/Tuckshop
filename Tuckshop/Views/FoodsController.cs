@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
+    [Authorize(Roles = "Admin, Teacher, Student")]
     public class FoodsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -20,11 +23,52 @@ namespace Tuckshop.Views
         }
 
         // GET: Foods
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+         string sortOrder,
+         string currentFilter,
+         string searchString,
+         int? pageNumber)
         {
-              return _context.Food != null ? 
-                          View(await _context.Food.ToListAsync()) :
-                          Problem("Entity set 'TuckshopContext.Food'  is null.");
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var foods = from s in _context.Food
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                foods = foods.Where(s => s.FoodName.Contains(searchString));
+
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    foods = foods.OrderByDescending(s => s.FoodName);
+                    break;
+                case "Date":
+                    foods = foods.OrderBy(s => s.FoodName);
+                    break;
+                case "date_desc":
+                    foods = foods.OrderByDescending(s => s.FoodName);
+                    break;
+                default:
+                    foods = foods.OrderBy(s => s.FoodName);
+                    break;
+            }
+
+            int pageSize = 5;
+            return View(await PaginatedList<Food>.CreateAsync(foods.AsNoTracking(), pageNumber ?? 1 , pageSize));
         }
 
         // GET: Foods/Details/5
@@ -160,4 +204,20 @@ namespace Tuckshop.Views
           return (_context.Food?.Any(e => e.FoodID == id)).GetValueOrDefault();
         }
     }
+}
+
+//enum which lets the user see options when they order the food
+public enum Foods
+{
+    Hamburger = 0,
+    Salad = 1,
+    Wrap = 2,
+}
+
+public enum Drinks
+{
+    Water = 0,
+    Coke = 1,
+    Sprite = 2,
+    Milk = 3,
 }
