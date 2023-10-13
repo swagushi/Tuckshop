@@ -106,6 +106,13 @@ namespace Tuckshop.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RequestID,OrderNumber,DateOrdered,FoodID,StudentID")] Request request)
         {
+            if (request.DateOrdered <= DateTime.Now)
+            {
+                ModelState.AddModelError("", "Cannot choose a date that has already passed");
+                return View(request);
+            }
+
+
             if (!ModelState.IsValid)
             {
                 _context.Add(request);
