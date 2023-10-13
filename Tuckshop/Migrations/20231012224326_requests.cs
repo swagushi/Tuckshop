@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tuckshop.Migrations
 {
-    public partial class allviewsadded : Migration
+    public partial class requests : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -207,12 +207,10 @@ namespace Tuckshop.Migrations
                 {
                     RequestID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
                     DateOrdered = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FoodID = table.Column<int>(type: "int", nullable: false),
-                    StudentID = table.Column<int>(type: "int", nullable: false),
-                    PaymentID = table.Column<int>(type: "int", nullable: false)
+                    StudentID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -222,12 +220,6 @@ namespace Tuckshop.Migrations
                         column: x => x.FoodID,
                         principalTable: "Food",
                         principalColumn: "FoodID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Request_Payment_PaymentID",
-                        column: x => x.PaymentID,
-                        principalTable: "Payment",
-                        principalColumn: "PaymentID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Request_Student_StudentID",
@@ -298,12 +290,6 @@ namespace Tuckshop.Migrations
                 column: "FoodID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Request_PaymentID",
-                table: "Request",
-                column: "PaymentID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Request_StudentID",
                 table: "Request",
                 column: "StudentID");
@@ -327,6 +313,9 @@ namespace Tuckshop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Payment");
+
+            migrationBuilder.DropTable(
                 name: "Request");
 
             migrationBuilder.DropTable(
@@ -337,9 +326,6 @@ namespace Tuckshop.Migrations
 
             migrationBuilder.DropTable(
                 name: "Food");
-
-            migrationBuilder.DropTable(
-                name: "Payment");
 
             migrationBuilder.DropTable(
                 name: "Student");

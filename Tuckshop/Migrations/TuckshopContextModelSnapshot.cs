@@ -305,15 +305,7 @@ namespace Tuckshop.Migrations
                     b.Property<int>("FoodID")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrderName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentID")
                         .HasColumnType("int");
 
                     b.Property<int>("StudentID")
@@ -322,9 +314,6 @@ namespace Tuckshop.Migrations
                     b.HasKey("RequestID");
 
                     b.HasIndex("FoodID");
-
-                    b.HasIndex("PaymentID")
-                        .IsUnique();
 
                     b.HasIndex("StudentID");
 
@@ -447,12 +436,6 @@ namespace Tuckshop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tuckshop.Models.Payment", "Payment")
-                        .WithOne("Request")
-                        .HasForeignKey("Tuckshop.Models.Request", "PaymentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Tuckshop.Models.Student", "Student")
                         .WithMany("Request")
                         .HasForeignKey("StudentID")
@@ -461,20 +444,12 @@ namespace Tuckshop.Migrations
 
                     b.Navigation("Food");
 
-                    b.Navigation("Payment");
-
                     b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Tuckshop.Models.Food", b =>
                 {
                     b.Navigation("Request");
-                });
-
-            modelBuilder.Entity("Tuckshop.Models.Payment", b =>
-                {
-                    b.Navigation("Request")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Tuckshop.Models.Student", b =>

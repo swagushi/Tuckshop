@@ -4,38 +4,27 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Orders</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Order Here</a>
+    <a asp-action="Create">Create New</a>
 </p>
-
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by order name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> 
-
-
-
-
-
-            <a asp-action="Index">Back to Full List</a>
-        </p>
-    </div>
-</form>
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Order Name</a>
-            </th>
-            <th>
-                Order Number
+                OrderNumber
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Date Ordered</a>
+
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Student Name</a>
+
+            </th>
+            <th>
+                Food
             </th>
             <th></th>
         </tr>
@@ -43,9 +32,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderName)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OrderNumber)
             </td>
@@ -56,47 +42,14 @@
                 @Html.DisplayFor(modelItem => item.Student.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Food.DrinkName)
+                @Html.DisplayFor(modelItem => item.Food.FoodID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Payment.PaymentName)
+                <a asp-action="Edit" asp-route-id="@item.RequestID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RequestID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RequestID">Delete</a>
             </td>
-
-                @if (User.Identity.IsAuthenticated)
-                {
-                    if (User.IsInRole("Admin"))
-                    {
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.RequestID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.RequestID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.RequestID">Delete</a>
-                        </td>
-                    }
-
-
-                }
-
         </tr>
 }
     </tbody>
 </table>
-
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>

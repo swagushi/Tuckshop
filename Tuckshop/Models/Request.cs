@@ -5,17 +5,7 @@ namespace Tuckshop.Models
     public class Request
     {
         public int RequestID { get; set; }
-        [Required]
-        //the user cannot create an order without filling out the OrderName field 
-        [Display(Name = "Order Name")]
-        //When the user sees the page they will see Order Name instead of OrderName
-        [StringLength(50, MinimumLength = 3)]
-        //When the user requests an order their order it must be atleast 3 letters and a maximum of 50 letters
-        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$",
-        //The user cannot add any special characters
-         ErrorMessage = "Characters are not allowed.")]
-        //if they do they will see this error message
-        public string OrderName { get; set; }
+      
 
         [Required]
         //the user cannot create an order without filling out the OrderNumber field 
@@ -35,11 +25,11 @@ namespace Tuckshop.Models
 
         public int FoodID { get; set; }
         public int StudentID { get; set; }
-        public int PaymentID { get; set; }
+       
 
         public Student Student { get; set; }
         public Food Food { get; set; }
-        public Payment Payment { get; set; }
+       
     }
 }
     
