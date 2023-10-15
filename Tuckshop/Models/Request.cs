@@ -5,7 +5,6 @@ namespace Tuckshop.Models
     public class Request
     {
         public int RequestID { get; set; }
-      
 
         [Required]
         //the user cannot create an order without filling out the OrderNumber field 

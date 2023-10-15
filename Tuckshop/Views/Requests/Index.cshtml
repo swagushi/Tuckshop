@@ -4,27 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Orders</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Order here</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                OrderNumber
+                @Html.DisplayNameFor(model => model.OrderNumber)
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Date Ordered</a>
-
+                @Html.DisplayNameFor(model => model.DateOrdered)
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Student Name</a>
-
+                @Html.DisplayNameFor(model => model.Student)
             </th>
             <th>
-                Food
+                @Html.DisplayNameFor(model => model.Food)
             </th>
             <th></th>
         </tr>

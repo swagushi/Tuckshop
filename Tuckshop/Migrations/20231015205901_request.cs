@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tuckshop.Migrations
 {
-    public partial class requests : Migration
+    public partial class request : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

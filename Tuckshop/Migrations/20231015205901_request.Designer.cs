@@ -12,8 +12,8 @@ using Tuckshop.Areas.Identity.Data;
 namespace Tuckshop.Migrations
 {
     [DbContext(typeof(TuckshopContext))]
-    [Migration("20231012224326_requests")]
-    partial class requests
+    [Migration("20231015205901_request")]
+    partial class request
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

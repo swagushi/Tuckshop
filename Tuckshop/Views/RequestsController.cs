@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +10,6 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
-    [Authorize(Roles = "Admin, Teacher, Student")]
     public class RequestsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -23,54 +20,22 @@ namespace Tuckshop.Views
         }
 
         // GET: Requests
-        //sort order feature for requests, sorting by ordername 
-        public async Task<IActionResult> Index(
-     string sortOrder,
-     string currentFilter,
-     string searchString,
-
-     int? pageNumber)
+        public async Task<IActionResult> Index()
         {
             var tuckshopContext = _context.Request.Include(r => r.Food).Include(r => r.Student);
             return View(await tuckshopContext.ToListAsync());
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-            if (searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewData["CurrentFilter"] = searchString;
-
-            var requests = from s in _context.Request
-                           select s;
-           
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    requests = requests.OrderByDescending(s => s.DateOrdered);
-                    break;
-                case "Date":
-                    requests = requests.OrderBy(s => s.DateOrdered);
-                    break;
-                case "date_desc":
-                    requests = requests.OrderByDescending(s => s.DateOrdered);
-                    break;
-                default:
-                    requests = requests.OrderBy(s => s.DateOrdered);
-                    break;
-            }
-
-            int pageSize = 5;
-            return View(await PaginatedList<Request>.CreateAsync(requests.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        public async Task<ActionResult> RedirectToWebsite()
+        {
+            await _context.SaveChangesAsync();
+            return Redirect("https://www.youtube.com");
+
+
+        }
+
+        [HttpPost]
+    
         // GET: Requests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -106,18 +71,11 @@ namespace Tuckshop.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RequestID,OrderNumber,DateOrdered,FoodID,StudentID")] Request request)
         {
-            if (request.DateOrdered <= DateTime.Now)
-            {
-                ModelState.AddModelError("", "Cannot choose a date that has already passed");
-                return View(request);
-            }
-
-
             if (!ModelState.IsValid)
             {
                 _context.Add(request);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect("https://www.youtube.com");
             }
             ViewData["FoodID"] = new SelectList(_context.Food, "FoodID", "FoodID", request.FoodID);
             ViewData["StudentID"] = new SelectList(_context.Student, "StudentID", "FirstName", request.StudentID);
@@ -154,7 +112,7 @@ namespace Tuckshop.Views
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
