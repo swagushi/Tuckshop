@@ -22,7 +22,7 @@ public class TuckshopContext : IdentityDbContext<TuckshopUser>
 
     public DbSet<Tuckshop.Models.Student>? Student { get; set; }
 
-    public DbSet<Tuckshop.Models.Payment>? Payment { get; set; }
+   
 
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -35,11 +35,7 @@ public class TuckshopContext : IdentityDbContext<TuckshopUser>
             
             );
 
-        builder.Entity<Payment>().HasData(
-             new Payment() { PaymentID = 1, PaymentName = "Connor", PaymentStatement = "Fatu", PaymentAmount = 3 }
-
-
-            );
+       
 
 
         base.OnModelCreating(builder);

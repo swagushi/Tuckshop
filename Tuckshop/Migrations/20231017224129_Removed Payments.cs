@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tuckshop.Migrations
 {
-    public partial class request : Migration
+    public partial class RemovedPayments : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,21 +63,6 @@ namespace Tuckshop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Food", x => x.FoodID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payment",
-                columns: table => new
-                {
-                    PaymentID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PaymentName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PaymentAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PaymentStatement = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payment", x => x.PaymentID);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,11 +215,6 @@ namespace Tuckshop.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Payment",
-                columns: new[] { "PaymentID", "PaymentAmount", "PaymentName", "PaymentStatement" },
-                values: new object[] { 1, 3m, "Connor", "Fatu" });
-
-            migrationBuilder.InsertData(
                 table: "Student",
                 columns: new[] { "StudentID", "FirstName", "Homeroom", "LastName" },
                 values: new object[,]
@@ -311,9 +291,6 @@ namespace Tuckshop.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Payment");
 
             migrationBuilder.DropTable(
                 name: "Request");

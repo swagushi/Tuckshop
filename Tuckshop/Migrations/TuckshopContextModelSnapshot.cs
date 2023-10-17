@@ -253,42 +253,7 @@ namespace Tuckshop.Migrations
 
                     b.HasKey("FoodID");
 
-                    b.ToTable("Food", (string)null);
-                });
-
-            modelBuilder.Entity("Tuckshop.Models.Payment", b =>
-                {
-                    b.Property<int>("PaymentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentID"), 1L, 1);
-
-                    b.Property<decimal>("PaymentAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PaymentName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PaymentStatement")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("PaymentID");
-
-                    b.ToTable("Payment", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            PaymentID = 1,
-                            PaymentAmount = 3m,
-                            PaymentName = "Connor",
-                            PaymentStatement = "Fatu"
-                        });
+                    b.ToTable("Food");
                 });
 
             modelBuilder.Entity("Tuckshop.Models.Request", b =>
@@ -317,7 +282,7 @@ namespace Tuckshop.Migrations
 
                     b.HasIndex("StudentID");
 
-                    b.ToTable("Request", (string)null);
+                    b.ToTable("Request");
                 });
 
             modelBuilder.Entity("Tuckshop.Models.Student", b =>
@@ -344,7 +309,7 @@ namespace Tuckshop.Migrations
 
                     b.HasKey("StudentID");
 
-                    b.ToTable("Student", (string)null);
+                    b.ToTable("Student");
 
                     b.HasData(
                         new

@@ -12,8 +12,8 @@ using Tuckshop.Areas.Identity.Data;
 namespace Tuckshop.Migrations
 {
     [DbContext(typeof(TuckshopContext))]
-    [Migration("20231015205901_request")]
-    partial class request
+    [Migration("20231017224129_Removed Payments")]
+    partial class RemovedPayments
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -256,41 +256,6 @@ namespace Tuckshop.Migrations
                     b.HasKey("FoodID");
 
                     b.ToTable("Food");
-                });
-
-            modelBuilder.Entity("Tuckshop.Models.Payment", b =>
-                {
-                    b.Property<int>("PaymentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentID"), 1L, 1);
-
-                    b.Property<decimal>("PaymentAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PaymentName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PaymentStatement")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("PaymentID");
-
-                    b.ToTable("Payment");
-
-                    b.HasData(
-                        new
-                        {
-                            PaymentID = 1,
-                            PaymentAmount = 3m,
-                            PaymentName = "Connor",
-                            PaymentStatement = "Fatu"
-                        });
                 });
 
             modelBuilder.Entity("Tuckshop.Models.Request", b =>
