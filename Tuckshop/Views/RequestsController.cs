@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ using Tuckshop.Models;
 
 namespace Tuckshop.Views
 {
+    [Authorize(Roles = "Admin, Teacher, Student")]
     public class RequestsController : Controller
     {
         private readonly TuckshopContext _context;
@@ -18,6 +21,12 @@ namespace Tuckshop.Views
         {
             _context = context;
         }
+
+        public IActionResult PaymentConfirmation()
+        {
+            return View();
+        }
+
 
         // GET: Requests
         public async Task<IActionResult> Index()
@@ -75,7 +84,7 @@ namespace Tuckshop.Views
             {
                 _context.Add(request);
                 await _context.SaveChangesAsync();
-                return Redirect("https://www.youtube.com");
+                return Redirect("https://localhost:7116/Requests/PaymentConfirmation");
             }
             ViewData["FoodID"] = new SelectList(_context.Food, "FoodID", "FoodID", request.FoodID);
             ViewData["StudentID"] = new SelectList(_context.Student, "StudentID", "FirstName", request.StudentID);
@@ -182,3 +191,4 @@ namespace Tuckshop.Views
         }
     }
 }
+

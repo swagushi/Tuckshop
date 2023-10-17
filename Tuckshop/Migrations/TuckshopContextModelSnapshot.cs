@@ -253,7 +253,7 @@ namespace Tuckshop.Migrations
 
                     b.HasKey("FoodID");
 
-                    b.ToTable("Food");
+                    b.ToTable("Food", (string)null);
                 });
 
             modelBuilder.Entity("Tuckshop.Models.Payment", b =>
@@ -279,7 +279,7 @@ namespace Tuckshop.Migrations
 
                     b.HasKey("PaymentID");
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
 
                     b.HasData(
                         new
@@ -317,7 +317,7 @@ namespace Tuckshop.Migrations
 
                     b.HasIndex("StudentID");
 
-                    b.ToTable("Request");
+                    b.ToTable("Request", (string)null);
                 });
 
             modelBuilder.Entity("Tuckshop.Models.Student", b =>
@@ -344,7 +344,7 @@ namespace Tuckshop.Migrations
 
                     b.HasKey("StudentID");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", (string)null);
 
                     b.HasData(
                         new

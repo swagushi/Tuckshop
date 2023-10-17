@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Order</h1>
 
-<h4>Request</h4>
+<h4>Order</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -29,6 +29,8 @@
             <div class="form-group">
                 <label asp-for="StudentID" class="control-label"></label>
                 <select asp-for="StudentID" class ="form-control" asp-items="ViewBag.StudentID"></select>
+
+             
             </div>
 
            
@@ -40,7 +42,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Cancel Order</a>
 </div>
 
 @section Scripts {
