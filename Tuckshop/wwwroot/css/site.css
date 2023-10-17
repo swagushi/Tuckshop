@@ -28,3 +28,20 @@ body {
     object-fit:cover;
 }
 
+.btn {
+    border: 2px solid;
+    border-image-slice: 1;
+   
+    border-image-source: var(--gradient) !important;
+    text-decoration: none;
+    transition: all .4s ease;
+}
+
+    .btn:hover, .btn:focus {
+        background: var(--gradient) !important;
+        -webkit-background-clip: none !important;
+        -webkit-text-fill-color: black !important;
+        border: 2px solid #000000 !important;
+        box-shadow: #222 1px 0 10px;
+        text-decoration: underline;
+    }
