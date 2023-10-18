@@ -316,28 +316,28 @@ namespace Tuckshop.Migrations
                         {
                             StudentID = 1,
                             FirstName = "Josef",
-                            Homeroom = "1",
+                            Homeroom = "EKO",
                             LastName = "Fatu"
                         },
                         new
                         {
                             StudentID = 2,
                             FirstName = "Rynal",
-                            Homeroom = "1",
+                            Homeroom = "DYL",
                             LastName = "Chand"
                         },
                         new
                         {
                             StudentID = 3,
                             FirstName = "Sujal",
-                            Homeroom = "1",
+                            Homeroom = "EKR",
                             LastName = "Chand"
                         },
                         new
                         {
                             StudentID = 4,
                             FirstName = "Muhammad",
-                            Homeroom = "2",
+                            Homeroom = "STP",
                             LastName = "Sherry"
                         });
                 });

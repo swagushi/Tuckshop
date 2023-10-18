@@ -24,10 +24,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Homeroom" class="control-label"></label>
-                <select asp-for="Homeroom" class="form-control" asp-items="Html.GetEnumSelectList<HomeRoom>()">
-                    <option value="">Select</option>
-                </select>
-                <span asp-validation-for="Homeroom" class="text-danger"></span>
+               <select select asp-for="Homeroom" class="form control">
+
+                    <option value="FJN">FJN</option>
+                    <option value="EKO">EKO</option>
+                    <option value="PLS">PLS</option>
+                    <option value="EKR">EKR</option>
+                    <option value="YNO">YNO</option>
+                    <option value="STP">STP</option>
+                    <option value="FTN">FTN</option>
+               </select>
+               <span asp-validation-for="Homeroom" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

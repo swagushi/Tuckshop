@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tuckshop.Migrations
 {
-    public partial class RemovedPayments : Migration
+    public partial class dropdown : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -219,10 +219,10 @@ namespace Tuckshop.Migrations
                 columns: new[] { "StudentID", "FirstName", "Homeroom", "LastName" },
                 values: new object[,]
                 {
-                    { 1, "Josef", "1", "Fatu" },
-                    { 2, "Rynal", "1", "Chand" },
-                    { 3, "Sujal", "1", "Chand" },
-                    { 4, "Muhammad", "2", "Sherry" }
+                    { 1, "Josef", "EKO", "Fatu" },
+                    { 2, "Rynal", "DYL", "Chand" },
+                    { 3, "Sujal", "EKR", "Chand" },
+                    { 4, "Muhammad", "STP", "Sherry" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,8 +12,8 @@ using Tuckshop.Areas.Identity.Data;
 namespace Tuckshop.Migrations
 {
     [DbContext(typeof(TuckshopContext))]
-    [Migration("20231017224129_Removed Payments")]
-    partial class RemovedPayments
+    [Migration("20231018204921_dropdown")]
+    partial class dropdown
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -318,28 +318,28 @@ namespace Tuckshop.Migrations
                         {
                             StudentID = 1,
                             FirstName = "Josef",
-                            Homeroom = "1",
+                            Homeroom = "EKO",
                             LastName = "Fatu"
                         },
                         new
                         {
                             StudentID = 2,
                             FirstName = "Rynal",
-                            Homeroom = "1",
+                            Homeroom = "DYL",
                             LastName = "Chand"
                         },
                         new
                         {
                             StudentID = 3,
                             FirstName = "Sujal",
-                            Homeroom = "1",
+                            Homeroom = "EKR",
                             LastName = "Chand"
                         },
                         new
                         {
                             StudentID = 4,
                             FirstName = "Muhammad",
-                            Homeroom = "2",
+                            Homeroom = "STP",
                             LastName = "Sherry"
                         });
                 });

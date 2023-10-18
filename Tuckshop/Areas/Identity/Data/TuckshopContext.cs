@@ -28,10 +28,10 @@ public class TuckshopContext : IdentityDbContext<TuckshopUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Student>().HasData(
-            new Student() { StudentID=1 , FirstName = "Josef", LastName = "Fatu", Homeroom = "1" },
-            new Student() { StudentID = 2, FirstName = "Rynal", LastName = "Chand", Homeroom = "1" },
-            new Student() { StudentID = 3, FirstName = "Sujal", LastName = "Chand", Homeroom = "1" },
-            new Student() { StudentID=4, FirstName="Muhammad", LastName="Sherry", Homeroom="2"}
+            new Student() { StudentID=1 , FirstName = "Josef", LastName = "Fatu", Homeroom = "EKO" },
+            new Student() { StudentID = 2, FirstName = "Rynal", LastName = "Chand", Homeroom = "DYL" },
+            new Student() { StudentID = 3, FirstName = "Sujal", LastName = "Chand", Homeroom = "EKR" },
+            new Student() { StudentID=4, FirstName="Muhammad", LastName="Sherry", Homeroom="STP"}
             
             );
 
